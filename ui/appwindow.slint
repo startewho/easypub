@@ -1,7 +1,15 @@
 import { Button, VerticalBox , GridBox, HorizontalBox, TabWidget, LineEdit} from "std-widgets.slint";
+export  struct EpubSetting{
+    inpath:string,
+    outpath:string,
+    name:string,
+    auther:string,
+
+}
+
 
 export component AppWindow inherits Window {
-    callback epub(string,string)->int;
+    callback epub(EpubSetting)->int;
     in-out property<int> counter: 42;
     in-out property <string>  inpath;
     in-out property <string>  name;
@@ -50,7 +58,13 @@ export component AppWindow inherits Window {
                     width: 96px;
                     text: "开始转换";
                     clicked => {
-                     epub(root.inpath,root.outpath);
+                    
+                     epub({
+                        inpath:root.inpath,
+                        outpath:root.outpath,
+                        name:root.name,
+                        auther:root.author
+                     });
                     }
                  }
              }
