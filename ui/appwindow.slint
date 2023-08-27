@@ -1,17 +1,89 @@
-import { Button, VerticalBox } from "std-widgets.slint";
+import { Button, VerticalBox , GridBox, HorizontalBox, TabWidget, LineEdit} from "std-widgets.slint";
 
 export component AppWindow inherits Window {
+    callback epub(string,string)->int;
     in-out property<int> counter: 42;
+    in-out property <string>  inpath;
+    in-out property <string>  name;
+    in-out property <string>  author;
+    in-out property <string>  outpath;
+    title: "EasyPub";
     callback request-increase-value();
     VerticalBox {
-        Text {
-            text: "Counter: \{root.counter}";
+        VerticalBox {
+            alignment: start;
+            spacing: 10px;
+            padding: 0;
+            HorizontalBox { 
+                 spacing: 10px;
+                 padding: 0;
+                Text {text: "输入:";vertical-alignment:center;}
+                LineEdit { text<=>root.inpath;}
+                Button{
+                    width: 48px;
+                    text: "...";
+                 }
+             }
+             HorizontalBox { 
+                spacing: 10px;
+                padding: 0;
+                Text {text: "书名:";vertical-alignment:center;}
+                LineEdit  {text<=>root.name;}
+                Text {text: "作者:";vertical-alignment:center;}
+                LineEdit  {text<=>root.author;}
+             }
+             HorizontalBox { 
+                spacing: 10px;
+                padding: 0;
+                Text {text: "输出:";vertical-alignment:center;}
+                LineEdit  {text<=>root.outpath;}
+                Button{
+                    width: 50px;
+                    text: "...";
+                 }
+             }
+             HorizontalBox { 
+                spacing: 10px;
+                padding: 0;
+                alignment: end;
+                Button{
+                    width: 96px;
+                    text: "开始转换";
+                    clicked => {
+                     epub(root.inpath,root.outpath);
+                    }
+                 }
+             }
+             
         }
-        Button {
-            text: "Increase value";
-            clicked => {
-                root.request-increase-value();
+        
+         TabWidget { 
+            Tab{
+                title: "章节";
+                Rectangle {background: orange;}
             }
-        }
+            Tab{
+                title: "版式";
+                Rectangle {background: pink;}
+            }
+            Tab{
+                title: "出版信息";
+                Rectangle {background: orange;}
+            }
+            Tab{
+                title: "定制css";
+                Rectangle {background: pink;}
+            }
+            Tab{
+                title: "插图";
+                Rectangle {background: orange;}
+            }
+            Tab{
+                title: "高级";
+                Rectangle {background: pink;}
+            }
+
+          }
+       
     }
 }
